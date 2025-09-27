@@ -89,6 +89,36 @@
       -webkit-transform: translateY(0px);
       opacity: 1;
     }
+
+  .bgm-container {
+            position: fixed;
+            top: 25%;
+            right: 30px;
+            z-index: 9999;
+        }
+
+        .bgm-toggle {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .bgm-toggle:hover {
+            background: #0056b3;
+        }
+
+        .bgm-toggle.off {
+            background: #6c757d;
+        }
+
+        .bgm-toggle.off:hover {
+            background: #5a6268;
+        }
   </style>
 </head>
 
@@ -170,6 +200,13 @@
   <img id="goToPage1" data-audio-path="../audios/home.mp3" src="../images/table_of_content/home-icon.svg" alt="home-icon" class="absolute w-[58px] h-[58px] right-[2%] top-[14%] p-2 z-1005 border-black rounded-full bg-white  hover:bg-[#fcb33e] cursor-pointer fixed"/>
 </div>
 
+ 
+<div class="bgm-container">
+        <audio id="bgmAudio" loop>
+            <source src="../audios/Beloved(chosic.com).mp3" type="audio/wav">
+        </audio>
+        <button id="bgmButton" class="bgm-toggle">🎵 ON</button>
+    </div>
 
       <!-- <div class="home-img-container">
         <i class="fa-solid fa-house"></i>
@@ -1271,14 +1308,47 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
+ <script>
+        window.addEventListener('load', function() {
+            const bgmAudio = document.getElementById('bgmAudio');
+            const bgmButton = document.getElementById('bgmButton');
+            let musicOn = true;
 
+            function toggleMusic() {
+                if (musicOn) {
+                    // Turn OFF
+                    bgmAudio.pause();
+                    bgmButton.textContent = '🎵 OFF';
+                    bgmButton.classList.add('off');
+                    musicOn = false;
+                    console.log('Music turned OFF');
+                } else {
+                    // Turn ON
+                    bgmAudio.play().then(function() {
+                        bgmButton.textContent = '🎵 ON';
+                        bgmButton.classList.remove('off');
+                        musicOn = true;
+                        console.log('Music turned ON');
+                    }).catch(function(error) {
+                        console.log('Could not play music:', error);
+                    });
+                }
+            }
 
+            // Add click event
+            bgmButton.onclick = toggleMusic;
 
-
-
-
-
-
+            // Auto-start music
+            setTimeout(function() {
+                bgmAudio.play().catch(function(error) {
+                    musicOn = false;
+                    bgmButton.textContent = '🎵 OFF';
+                    bgmButton.classList.add('off');
+                    console.log('Autoplay blocked');
+                });
+            }, 500);
+        });
+    </script>
 
 
 

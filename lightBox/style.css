@@ -43,7 +43,7 @@
     max-height: 100px !important; 
     cursor: pointer;
     user-select: none;
-    width: auto;
+    width: 80px;
     
     
     
@@ -59,6 +59,7 @@
 
 .flex-col:last-child img {
     cursor: pointer;
+    width: auto;
 }
 
 .flex-col:last-child p {
