@@ -204,6 +204,7 @@
 <div class="bgm-container">
         <audio id="bgmAudio" loop>
             <source src="../audios/Beloved(chosic.com).mp3" type="audio/wav">
+             <!-- <source src="../audios/TTP_MUSIC.mp3" type="audio/wav"> -->
         </audio>
         <button id="bgmButton" class="bgm-toggle">🎵 ON</button>
     </div>
@@ -1311,6 +1312,7 @@ document.addEventListener("DOMContentLoaded", function () {
  <script>
         window.addEventListener('load', function() {
             const bgmAudio = document.getElementById('bgmAudio');
+            bgmAudio.volume = 0.15;
             const bgmButton = document.getElementById('bgmButton');
             let musicOn = true;
 
