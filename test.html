@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inline SVG Loader Test</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+  body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+h2 {
+  color: #222;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.svg-wrapper {
+  width: 60%;
+  max-width: 400px;
+  min-height: 200px;
+  position: relative;
+  background: white;
+  border: 2px dashed #999;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg-wrapper svg {
+  width: 100%;
+  height: auto;
+}
+
+#loadingText {
+  margin-top: 20px;
+  color: #555;
+  font-size: 16px;
+}
+
+</style>
+<body>
+
+  <h2>SVG Inline Load Test</h2>
+
+  <!-- Target div where SVG will be injected -->
+  <div id="svgContainer" class="svg-wrapper"></div>
+<img src="./images/text-images-new/250-ml-round-text.svg"/>
+  <!-- Fallback message (hidden after load) -->
+  <p id="loadingText">Loading SVG...</p>
+
+  <script >
+
+    // === Inline SVG Loader ===
+
+// Path to your SVG file (adjust this path)
+const svgPath = "./images/text-images-new/250-ml-round-text.svg";
+
+// Target div where SVG will be injected
+const targetDiv = document.getElementById("svgContainer");
+const loadingText = document.getElementById("loadingText");
+
+// Fetch the SVG content
+fetch(svgPath)
+  .then((response) => {
+    if (!response.ok) throw new Error("Network response was not ok");
+    return response.text();
+  })
+  .then((svgText) => {
+    // Inject SVG directly into the div
+    targetDiv.innerHTML = svgText;
+
+    // Hide loading text
+    loadingText.style.display = "none";
+
+    // Optional: add your custom class or inline styles to the injected SVG
+    const svgElement = targetDiv.querySelector("svg");
+    if (svgElement) {
+      svgElement.classList.add("w-full", "h-auto");
+    }
+
+    console.log("✅ SVG loaded inline successfully");
+  })
+  .catch((error) => {
+    loadingText.textContent = "⚠️ Failed to load SVG!";
+    console.error("SVG load error:", error);
+  });
+
+  </script>
+
+</body>
+</html>
